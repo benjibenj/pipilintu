@@ -1,0 +1,45 @@
+import { Cinzel, Montserrat } from "next/font/google"
+import type { Metadata } from "next"
+
+import "./globals.css"
+import { siteMeta } from "@/lib/constants"
+import { cn } from "@/lib/utils"
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-sans",
+})
+
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  variable: "--font-heading",
+})
+
+export const metadata: Metadata = {
+  title: siteMeta.title,
+  description: siteMeta.description,
+  openGraph: {
+    title: siteMeta.title,
+    description: siteMeta.description,
+    locale: "fr_FR",
+    type: "website",
+    siteName: "Pipilintu",
+  },
+}
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  return (
+    <html
+      lang="fr"
+      className={cn("dark antialiased", montserrat.variable, cinzel.variable)}
+    >
+      <body className="min-h-svh bg-background font-sans text-foreground">
+        {children}
+      </body>
+    </html>
+  )
+}
