@@ -7,7 +7,7 @@ export const siteContent = {
   hero: {
     title: "Pipilintu",
     tagline:
-      "3600km, des Andes à l'Atlantique en radeau traditionnel",
+      "Des Antes à l'Atlantique, 3600km à la rame sur un radeau traditionnel",
     cta: "S'inscrire à la newsletter",
     ctaHint:
       "Soyez informé de la sortie VOD et des projections en France et ailleurs.",
@@ -26,20 +26,16 @@ export const siteContent = {
   },
   synopsis: {
     title: "Synopsis",
-    intro:
-      "L'expédition Pipilintu (« papillon » en langue aymara) célèbre le patrimoine bolivien à l'occasion du bicentenaire avec une navigation à la rame et à la voile sur une balsa traditionnelle en totora.",
+    facts: [
+      { label: "Durée", value: "52 min" },
+      { label: "Sortie", value: "Automne 2026" },
+    ],
     body: [
-      "L'expédition s'élance en juillet 2025 de Guanay en Bolivie, et traverse les fleuves Kaka et Béni.",
-      "Puis, au Brésil, en descendant les rios Madeira et Amazone, la balsa file jusqu'à Macapá, à l'embouchure de l'Amazone avec l'Océan Atlantique — soit environ 3 600 km.",
+      "Des Andes à l'Atlantique, un même courant relie des mondes que tout semble opposer. En découvrant les balsas de totora, embarcations de roseaux construites selon un savoir-faire ancestral transmis sur les rives du lac Titicaca, Fabien imagine un pari audacieux : rejoindre l'océan à la rame en empruntant les anciennes voies fluviales qui traversent l'Amazonie. Autour de lui se forme un équipage de cinq voyageurs, prêt à donner vie à cette aventure hors du commun.",
+      "À bord de Pipilintu, leur éphémère catamaran signifiant « Papillon », l'expédition dépasse rapidement le simple défi sportif. Guidé par le fleuve, l'équipage traverse une mosaïque de territoires et de communautés dont les destins restent intimement liés aux eaux amazoniennes.",
+      "Mais au fil du voyage, l'inattendu s'invite : vivant au contact quotidien des orpailleurs, escortés par la Marine bolivienne, pris pour des espions au Brésil et propulsés malgré eux sous les projecteurs, ils voient leur traversée prendre une dimension qu'ils n'avaient jamais imaginée, tandis que leur embarcation se dégrade inexorablement, comme les certitudes du départ, au gré des méandres amazoniens.",
+      "Entre film d'aventure, carnet de voyage et chronique humaine, Pipilintu suit une expédition où chaque rencontre déplace le regard. Bien plus qu'un simple itinéraire vers l'Atlantique, le fleuve devient un espace de dialogue entre territoires, cultures et visions du monde, révélant une Amazonie contemporaine, vivante et loin des clichés.",
     ],
-    objectivesTitle: "Objectifs",
-    objectives: [
-      "Valoriser le savoir-faire bolivien traditionnel.",
-      "Soutenir l'inscription des balsas en totora comme Patrimoine Culturel Immatériel de l'UNESCO.",
-      "Inspirer la transition vers un avenir durable, avec ce défi sportif, écologique et culturel.",
-    ],
-    support:
-      "Avec le soutien de la marine bolivienne (Armada Boliviana).",
   },
   itinerary: {
     title: "Itinéraire",
