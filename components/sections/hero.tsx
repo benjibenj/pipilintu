@@ -10,12 +10,13 @@ export function HeroSection() {
     <section
       id="hero"
       aria-labelledby="hero-heading"
-      className="relative flex min-h-[85svh] scroll-mt-20 items-center justify-center px-4 py-24 sm:px-6"
+      className="relative flex min-h-[85svh] scroll-mt-20 items-center justify-center px-4 py-24 sm:px-6 bg-[url('/images/pipilintu_titicaca.jpg')] bg-cover bg-center bg-no-repeat"
     >
-      <div className="mx-auto w-full max-w-3xl text-center">
-        <p className="mb-4 text-sm tracking-widest text-accent uppercase">
-          {hero.subtitle}
-        </p>
+      {/* Much dimmer overlay (increased opacity from /40 to /70) */}
+      <div className="absolute inset-0 bg-black/70" />
+
+      {/* Relative wrapper keeps text above the background overlay */}
+      <div className="relative z-10 mx-auto w-full max-w-3xl text-center">
         <h1
           id="hero-heading"
           className="font-heading text-5xl tracking-widest text-foreground uppercase sm:text-6xl md:text-7xl lg:text-8xl"
@@ -28,7 +29,7 @@ export function HeroSection() {
         <p className="mx-auto mt-4 max-w-md text-sm text-muted-foreground">
           {hero.ctaHint}
         </p>
-        <div className="mt-10">
+        <div className="mt-6">
           <Button render={<Link href="#newsletter" />} size="lg">
             {hero.cta}
           </Button>
