@@ -28,7 +28,7 @@ export function Section({
         <header className={cn("mb-8 md:mb-12", hideTitle && "sr-only")}>
           <h2
             id={`${id}-heading`}
-            className="font-heading text-2xl tracking-wide text-foreground sm:text-3xl md:text-4xl"
+            className="font-section text-2xl tracking-wide text-foreground sm:text-3xl md:text-4xl"
           >
             {title}
           </h2>
