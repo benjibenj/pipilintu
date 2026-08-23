@@ -6,9 +6,8 @@ export const siteContent = {
   },
   hero: {
     title: "Pipilintu",
-    subtitle: "Expédition Pipilintu",
     tagline:
-      "Une navigation pour l'avenir — Des Andes à l'Atlantique en balsa traditionnelle",
+      "3600km, des Andes à l'Atlantique en radeau traditionnel",
     cta: "S'inscrire à la newsletter",
     ctaHint:
       "Soyez informé de la sortie VOD et des projections en France et ailleurs.",
