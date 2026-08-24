@@ -1,7 +1,8 @@
 import Link from "next/link"
+import { Camera, Mail, MessageCircle } from "lucide-react"
 
 import { siteContent } from "@/lib/content/site.fr"
-import { NAV_ITEMS } from "@/lib/constants"
+import { CONTACT, NAV_ITEMS } from "@/lib/constants"
 import { cn } from "@/lib/utils"
 
 type FooterProps = {
@@ -9,7 +10,28 @@ type FooterProps = {
 }
 
 export function Footer({ className }: FooterProps) {
-  const { footer } = siteContent
+  const { contact, footer } = siteContent
+
+  const socialLinks = [
+    {
+      href: `mailto:${CONTACT.email}`,
+      label: contact.emailLabel,
+      icon: Mail,
+      external: false,
+    },
+    {
+      href: CONTACT.instagram,
+      label: contact.instagramLabel,
+      icon: Camera,
+      external: true,
+    },
+    {
+      href: CONTACT.whatsapp,
+      label: contact.whatsappLabel,
+      icon: MessageCircle,
+      external: true,
+    },
+  ]
 
   return (
     <footer className={cn("border-t border-border/60 bg-card/40", className)}>
@@ -38,9 +60,30 @@ export function Footer({ className }: FooterProps) {
           </nav>
         </div>
 
-        <p className="mt-8 text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Expédition Pipilintu. Tous droits réservés.
-        </p>
+        <div className="mt-8 flex flex-col gap-4 border-t border-border/60 pt-6 sm:flex-row-reverse sm:items-center sm:justify-between">
+          <ul className="flex gap-1" aria-label={contact.title} role="list">
+            {socialLinks.map(({ href, label, icon: Icon, external }) => (
+              <li key={href}>
+                <Link
+                  href={href}
+                  aria-label={label}
+                  title={label}
+                  {...(external
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
+                  className="flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  <Icon className="size-4" aria-hidden="true" />
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          <p className="text-xs text-muted-foreground">
+            © {new Date().getFullYear()} Expédition Pipilintu. Tous droits
+            réservés.
+          </p>
+        </div>
       </div>
     </footer>
   )

@@ -2,7 +2,7 @@ import { Cinzel, Encode_Sans_Condensed, Montserrat } from "next/font/google"
 import type { Metadata } from "next"
 
 import "./globals.css"
-import { siteMeta } from "@/lib/constants"
+import { SITE_URL, siteMeta } from "@/lib/constants"
 import { cn } from "@/lib/utils"
 
 const montserrat = Montserrat({
@@ -22,6 +22,7 @@ const encodeSansCondensed = Encode_Sans_Condensed({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: siteMeta.title,
   description: siteMeta.description,
   openGraph: {

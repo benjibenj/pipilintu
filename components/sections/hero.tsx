@@ -1,7 +1,10 @@
 import Link from "next/link"
+import { ArrowUpRight } from "lucide-react"
 
+import { Trailer } from "@/components/sections/trailer"
 import { Button } from "@/components/ui/button"
 import { siteContent } from "@/lib/content/site.fr"
+import { TALLY_FORM_URL } from "@/lib/constants"
 
 export function HeroSection() {
   const { hero } = siteContent
@@ -26,12 +29,26 @@ export function HeroSection() {
         <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground md:text-xl">
           {hero.tagline}
         </p>
-        <p className="mx-auto mt-4 max-w-md text-sm text-muted-foreground">
+
+        <Trailer className="mx-auto mt-10 w-full max-w-xl" />
+
+        <p className="mx-auto mt-10 max-w-md text-sm text-muted-foreground">
           {hero.ctaHint}
         </p>
-        <div className="mt-6">
-          <Button render={<Link href="#newsletter" />} size="lg">
+        <div className="mt-5">
+          <Button
+            size="lg"
+            className="h-12 gap-2 px-7 text-base font-semibold tracking-wide bg-accent text-accent-foreground shadow-lg shadow-accent/25 hover:bg-accent/90 focus-visible:ring-accent/50 sm:h-14 sm:px-9 sm:text-lg"
+            render={
+              <Link
+                href={TALLY_FORM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              />
+            }
+          >
             {hero.cta}
+            <ArrowUpRight aria-hidden="true" className="size-5" />
           </Button>
         </div>
       </div>

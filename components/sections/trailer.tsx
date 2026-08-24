@@ -1,12 +1,12 @@
-import { CalendarDays, Film } from "lucide-react"
+import { Film } from "lucide-react"
 
-import { Section } from "@/components/layout/section"
-import { Card, CardContent } from "@/components/ui/card"
 import { siteContent } from "@/lib/content/site.fr"
+import { cn } from "@/lib/utils"
 
-type TrailerSectionProps = {
+type TrailerProps = {
   /** YouTube or Vimeo URL — when provided, renders the embed instead of placeholder */
   trailerUrl?: string
+  className?: string
 }
 
 function getEmbedUrl(url: string): string | null {
@@ -40,38 +40,36 @@ function getEmbedUrl(url: string): string | null {
   return null
 }
 
-export function TrailerSection({ trailerUrl }: TrailerSectionProps) {
+/** Trailer player — embedded in the hero, above the CTA */
+export function Trailer({ trailerUrl, className }: TrailerProps) {
   const { trailer } = siteContent
   const embedUrl = trailerUrl ? getEmbedUrl(trailerUrl) : null
 
   return (
-    <Section id="trailer" title={trailer.title}>
-      {embedUrl ? (
-        <div className="aspect-video overflow-hidden rounded-xl ring-1 ring-border">
-          <iframe
-            src={embedUrl}
-            title={trailer.title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            className="h-full w-full"
-          />
-        </div>
-      ) : (
-        <Card className="border-dashed">
-          <CardContent className="flex aspect-video flex-col items-center justify-center gap-4 text-center">
-            <Film
-              className="size-12 text-muted-foreground"
-              aria-hidden="true"
-            />
-            <div>
-              <p className="font-medium text-foreground">{trailer.placeholder}</p>
-              <p className="mt-2 max-w-sm text-sm text-muted-foreground">
-                {trailer.placeholderHint}
-              </p>
-            </div>
-          </CardContent>
-        </Card>
+    <div
+      className={cn(
+        "aspect-video overflow-hidden rounded-xl ring-1 ring-border/60",
+        embedUrl ? null : "bg-background/50 backdrop-blur-sm",
+        className
       )}
-    </Section>
+    >
+      {embedUrl ? (
+        <iframe
+          src={embedUrl}
+          title={trailer.title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className="h-full w-full"
+        />
+      ) : (
+        <div className="flex h-full flex-col items-center justify-center gap-3 px-6 text-center">
+          <Film className="size-8 text-muted-foreground" aria-hidden="true" />
+          <p className="font-medium text-foreground">{trailer.placeholder}</p>
+          <p className="max-w-sm text-sm text-muted-foreground">
+            {trailer.placeholderHint}
+          </p>
+        </div>
+      )}
+    </div>
   )
 }
