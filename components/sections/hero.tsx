@@ -26,6 +26,9 @@ export function HeroSection() {
         >
           {hero.title}
         </h1>
+                  <p className="mb-4 text-sm tracking-widest text-accent uppercase">
+                   {hero.subtitle} 
+                  </p>
         <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground md:text-xl">
           {hero.tagline}
         </p>

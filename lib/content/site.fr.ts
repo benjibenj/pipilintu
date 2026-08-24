@@ -6,6 +6,7 @@ export const siteContent = {
   },
   hero: {
     title: "Pipilintu",
+    subtitle: "Le film",
     tagline:
       "Des Antes à l'Atlantique, 3600km à la rame sur un radeau traditionnel",
     cta: "S'inscrire à la newsletter",
@@ -35,7 +36,7 @@ export const siteContent = {
   /** Map shown in the synopsis facts column — no longer its own section */
   itinerary: {
     caption:
-      "De Guanay en Bolivie à Macapá au Brésil, par les fleuves Kaka, Béni, Madeira et Amazone.",
+      "De Guanay en Bolivie à Macapá au Brésil, 3600 km par les fleuves Kaka, Béni, Madeira et Amazone.",
     imageAlt:
       "Carte de l'itinéraire de l'expédition Pipilintu, de la Bolivie à Macapá au Brésil",
   },

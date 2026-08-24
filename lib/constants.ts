@@ -7,7 +7,7 @@ export const TALLY_FORM_URL = "https://tally.so/r/obvllX"
 export const CONTACT = {
   email: "pipilintuexpedition@gmail.com",
   instagram: "https://www.instagram.com/baboune_lowtech",
-  whatsapp: "https://wa.me/3334735406",
+  whatsapp: "https://wa.me/33634735406",
 } as const
 
 /** Main navigation — anchor links on home page + blog route */
