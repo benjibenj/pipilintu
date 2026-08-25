@@ -8,7 +8,7 @@ export const siteContent = {
     title: "Pipilintu",
     subtitle: "Le film",
     tagline:
-      "Des Antes à l'Atlantique, 3600km à la rame sur un radeau traditionnel",
+      "Des Andes à l'Atlantique, 3600km à la rame sur un radeau traditionnel",
     cta: "S'inscrire à la newsletter",
     ctaHint:
       "Soyez informé de la sortie VOD et des projections en France et ailleurs.",
@@ -39,6 +39,8 @@ export const siteContent = {
       "De Guanay en Bolivie à Macapá au Brésil, 3600 km par les fleuves Kaka, Béni, Madeira et Amazone.",
     imageAlt:
       "Carte de l'itinéraire de l'expédition Pipilintu, de la Bolivie à Macapá au Brésil",
+    mapLink: 'https://eur-share.explore.garmin.com/pipilintu',
+    mapLinkLabel: "📍 Tracé GPS de l'expédition 🗺️"
   },
   organizeProjection: {
     title: "Organiser une projection",
