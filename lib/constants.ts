@@ -10,6 +10,22 @@ export const CONTACT = {
   whatsapp: "https://wa.me/33634735406",
 } as const
 
+/** Builds a wa.me link carrying a pre-filled message */
+export function whatsappHref(message: string) {
+  return `${CONTACT.whatsapp}?text=${encodeURIComponent(message)}`
+}
+
+/**
+ * Builds a mailto link with a pre-filled subject and body. Encoded with
+ * encodeURIComponent rather than URLSearchParams — mail clients read `+` as a
+ * literal plus, not a space.
+ */
+export function mailtoHref(subject: string, body?: string) {
+  const query = [`subject=${encodeURIComponent(subject)}`]
+  if (body) query.push(`body=${encodeURIComponent(body)}`)
+  return `mailto:${CONTACT.email}?${query.join("&")}`
+}
+
 /** Main navigation — anchor links on home page + blog route */
 export const NAV_ITEMS = [
   { href: "/#synopsis", label: "Synopsis" },

@@ -42,12 +42,18 @@ export const siteContent = {
     mapLink: 'https://eur-share.explore.garmin.com/pipilintu',
     mapLinkLabel: "📍 Tracé GPS de l'expédition 🗺️"
   },
+  /** Rendered as a card at the bottom of the Projections section */
   organizeProjection: {
     title: "Organiser une projection",
     description:
       "Vous souhaitez projeter Pipilintu dans votre salle, festival ou association ? Contactez-nous pour organiser une projection publique ou privée.",
-    cta: "Nous contacter",
+    emailCta: "Nous écrire par email",
+    whatsappCta: "Nous écrire sur WhatsApp",
     emailSubject: "Demande de projection — Pipilintu",
+    emailBody:
+      "Bonjour,\n\nNous souhaiterions organiser une projection du film Pipilintu.\n\nStructure / lieu :\nVille :\nDate envisagée :\nJauge estimée :\nProjection publique ou privée :\n\nMerci !",
+    whatsappMessage:
+      "Bonjour ! Nous souhaiterions organiser une projection du film Pipilintu. Pouvons-nous en discuter ?",
   },
   projections: {
     title: "Projections",

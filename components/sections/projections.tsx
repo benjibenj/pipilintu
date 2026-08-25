@@ -1,29 +1,12 @@
 import Link from "next/link"
-import { CalendarDays } from "lucide-react"
+import { CalendarDays, Mail, MessageCircle } from "lucide-react"
 
 import { Section } from "@/components/layout/section"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { siteContent } from "@/lib/content/site.fr"
-import { CONTACT, PROJECTIONS } from "@/lib/constants"
-
-export function OrganizeProjectionSection() {
-  const { organizeProjection } = siteContent
-  const mailtoHref = `mailto:${CONTACT.email}?subject=${encodeURIComponent(organizeProjection.emailSubject)}`
-
-  return (
-    <Section
-      id="organize"
-      title={organizeProjection.title}
-      description={organizeProjection.description}
-    >
-      <Button render={<Link href={mailtoHref} />} size="lg">
-        {organizeProjection.cta}
-      </Button>
-    </Section>
-  )
-}
+import { mailtoHref, PROJECTIONS, whatsappHref } from "@/lib/constants"
 
 export function ProjectionDatesSection() {
   const { projections } = siteContent
@@ -72,7 +55,63 @@ export function ProjectionDatesSection() {
           ) : null}
         </div>
       )}
+
+      <OrganizeProjection />
     </Section>
+  )
+}
+
+/**
+ * Booking call-to-action, kept inside the Projections section so the dates and
+ * the way to request one read as a single block.
+ */
+function OrganizeProjection() {
+  const { organizeProjection } = siteContent
+
+  return (
+    <Card id="organize" className="mt-10 scroll-mt-20 ring-accent/25 md:mt-12">
+      <CardContent className="gap-5">
+        <div>
+          <h3 className="font-section text-xl text-accent md:text-2xl">
+            {organizeProjection.title}
+          </h3>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground md:text-base">
+            {organizeProjection.description}
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <Button
+            render={
+              <Link
+                href={mailtoHref(
+                  organizeProjection.emailSubject,
+                  organizeProjection.emailBody
+                )}
+              />
+            }
+            size="lg"
+          >
+            <Mail aria-hidden="true" />
+            {organizeProjection.emailCta}
+          </Button>
+          <Button
+            render={
+              <Link
+                href={whatsappHref(organizeProjection.whatsappMessage)}
+                target="_blank"
+                rel="noopener noreferrer"
+              />
+            }
+            variant="outline"
+            size="lg"
+          >
+            <MessageCircle aria-hidden="true" />
+            {organizeProjection.whatsappCta}
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
   )
 }
 
