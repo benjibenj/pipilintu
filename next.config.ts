@@ -27,15 +27,42 @@ const OLD_BLOG_SLUG_REDIRECTS: Record<string, string> = {
     "comment-a-t-on-prepare-l-expedition",
 }
 
+/**
+ * The old site (confirmed live at pipilintu.com on 2026-08-25, still
+ * indexed) had standalone pages this single-page French site collapses into
+ * homepage sections, or drops entirely. Crew profiles fold into the Team
+ * section; the boat/safety/press pages have no replacement content here, so
+ * they fall back to the homepage rather than 404ing on indexed URLs.
+ * Non-French locale trees (/en, /es, /pt-br, ~50 URLs) are intentionally
+ * left unredirected for now — out of scope until those routes exist.
+ */
+const OLD_PAGE_REDIRECTS: Array<{ source: string; destination: string }> = [
+  { source: "/blog-fr", destination: "/blog" },
+  { source: "/crew", destination: "/#team" },
+  { source: "/crew/fabien-gallier-baboune", destination: "/#team" },
+  { source: "/crew/erwan-rolland-santiago", destination: "/#team" },
+  { source: "/crew/benjamin-vaysse-benji", destination: "/#team" },
+  { source: "/crew/tlio-nouraud", destination: "/#team" },
+  { source: "/crew/thomas-merzlic-toto", destination: "/#team" },
+  { source: "/balsa-fr", destination: "/" },
+  { source: "/securite", destination: "/" },
+  { source: "/media", destination: "/" },
+]
+
 const nextConfig: NextConfig = {
   async redirects() {
-    return Object.entries(OLD_BLOG_SLUG_REDIRECTS).map(
-      ([oldSlug, newSlug]) => ({
+    return [
+      ...Object.entries(OLD_BLOG_SLUG_REDIRECTS).map(([oldSlug, newSlug]) => ({
         source: `/blog/${oldSlug}`,
         destination: `/blog/${newSlug}`,
         permanent: true,
-      })
-    )
+      })),
+      ...OLD_PAGE_REDIRECTS.map(({ source, destination }) => ({
+        source,
+        destination,
+        permanent: true,
+      })),
+    ]
   },
 }
 
