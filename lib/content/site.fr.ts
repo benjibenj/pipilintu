@@ -12,6 +12,7 @@ export const siteContent = {
     cta: "S'inscrire à la newsletter",
     ctaHint:
       "Soyez informé de la sortie VOD et des projections en France et ailleurs.",
+    instagramCta: "@baboune_lowtech",
   },
   trailer: {
     title: "Bande-annonce",
@@ -39,8 +40,8 @@ export const siteContent = {
       "De Guanay en Bolivie à Macapá au Brésil, 3600 km par les fleuves Kaka, Béni, Madeira et Amazone.",
     imageAlt:
       "Carte de l'itinéraire de l'expédition Pipilintu, de la Bolivie à Macapá au Brésil",
-    mapLink: 'https://eur-share.explore.garmin.com/pipilintu',
-    mapLinkLabel: "📍 Tracé GPS de l'expédition 🗺️"
+    mapLink: "https://eur-share.explore.garmin.com/pipilintu",
+    mapLinkLabel: "📍 Tracé GPS de l'expédition 🗺️",
   },
   /** Rendered as a card at the bottom of the Projections section */
   organizeProjection: {
@@ -57,8 +58,7 @@ export const siteContent = {
   },
   projections: {
     title: "Projections",
-    description:
-      "Dates des projections passées et à venir du film Pipilintu.",
+    description: "Dates des projections passées et à venir du film Pipilintu.",
     emptyTitle: "Aucune projection programmée pour le moment",
     emptyDescription:
       "Les dates de projection seront annoncées ici. Inscrivez-vous à la newsletter pour être informé en premier.",

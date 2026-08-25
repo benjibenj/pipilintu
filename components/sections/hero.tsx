@@ -1,19 +1,20 @@
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 
+import { InstagramIcon } from "@/components/icons/instagram"
 import { Trailer } from "@/components/sections/trailer"
 import { Button } from "@/components/ui/button"
 import { siteContent } from "@/lib/content/site.fr"
-import { TALLY_FORM_URL } from "@/lib/constants"
+import { CONTACT, TALLY_FORM_URL } from "@/lib/constants"
 
 export function HeroSection() {
-  const { hero } = siteContent
+  const { hero, contact } = siteContent
 
   return (
     <section
       id="hero"
       aria-labelledby="hero-heading"
-      className="relative flex min-h-[85svh] scroll-mt-20 items-center justify-center px-4 py-24 sm:px-6 bg-[url('/images/pipilintu_titicaca.jpg')] bg-cover bg-center bg-no-repeat"
+      className="relative flex min-h-[85svh] scroll-mt-20 items-center justify-center bg-[url('/images/pipilintu_titicaca.jpg')] bg-cover bg-center bg-no-repeat px-4 py-24 sm:px-6"
     >
       {/* Much dimmer overlay (increased opacity from /40 to /70) */}
       <div className="absolute inset-0 bg-black/70" />
@@ -26,9 +27,9 @@ export function HeroSection() {
         >
           {hero.title}
         </h1>
-                  <p className="mb-4 text-sm tracking-widest text-accent uppercase">
-                   {hero.subtitle} 
-                  </p>
+        <p className="mb-4 text-sm tracking-widest text-accent uppercase">
+          {hero.subtitle}
+        </p>
         <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground md:text-xl">
           {hero.tagline}
         </p>
@@ -38,10 +39,10 @@ export function HeroSection() {
         <p className="mx-auto mt-10 max-w-md text-sm text-muted-foreground">
           {hero.ctaHint}
         </p>
-        <div className="mt-5">
+        <div className="mt-5 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Button
             size="lg"
-            className="h-12 gap-2 px-7 text-base font-semibold tracking-wide bg-accent text-accent-foreground shadow-lg shadow-accent/25 hover:bg-accent/90 focus-visible:ring-accent/50 sm:h-14 sm:px-9 sm:text-lg"
+            className="h-12 gap-2 bg-accent px-7 text-base font-semibold tracking-wide text-accent-foreground shadow-lg shadow-accent/25 hover:bg-accent/90 focus-visible:ring-accent/50 sm:h-14 sm:px-9 sm:text-lg"
             render={
               <Link
                 href={TALLY_FORM_URL}
@@ -52,6 +53,22 @@ export function HeroSection() {
           >
             {hero.cta}
             <ArrowUpRight aria-hidden="true" className="size-5" />
+          </Button>
+          <Button
+            variant="outline"
+            size="lg"
+            aria-label={contact.instagramLabel}
+            className="h-12 gap-2 px-7 text-base font-semibold tracking-wide sm:h-14 sm:px-9 sm:text-lg"
+            render={
+              <Link
+                href={CONTACT.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+              />
+            }
+          >
+            <InstagramIcon aria-hidden="true" className="size-5" />
+            {hero.instagramCta}
           </Button>
         </div>
       </div>
