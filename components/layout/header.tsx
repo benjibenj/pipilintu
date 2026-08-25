@@ -69,7 +69,9 @@ export function Header({ className }: HeaderProps) {
           </SheetTrigger>
           <SheetContent side="right" className="w-full sm:max-w-xs">
             <SheetHeader>
-              <SheetTitle>Menu</SheetTitle>
+              <SheetTitle className="font-section tracking-wide">
+                Menu
+              </SheetTitle>
             </SheetHeader>
             <nav aria-label="Navigation mobile" className="flex flex-col gap-1 px-4">
               {NAV_ITEMS.map((item) => (
