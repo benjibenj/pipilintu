@@ -127,6 +127,8 @@ export const siteContent = {
   footer: {
     copyright: "Expédition Pipilintu",
     tagline: "Prochain arrêt : le grand écran",
+    producedWith: "Un film produit en collaboration avec",
+    solidreamLabel: "Solidream — visiter le site (nouvel onglet)",
   },
 } as const
 

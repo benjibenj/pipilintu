@@ -10,6 +10,9 @@ export const CONTACT = {
   whatsapp: "https://wa.me/33634735406",
 } as const
 
+/** Production partner, credited in the footer */
+export const SOLIDREAM_URL = "https://solidream.net/"
+
 /** Builds a wa.me link carrying a pre-filled message */
 export function whatsappHref(message: string) {
   return `${CONTACT.whatsapp}?text=${encodeURIComponent(message)}`
@@ -150,7 +153,8 @@ export const siteMeta = siteContent.meta
  * Canonical origin, used to resolve Open Graph image URLs. Override in
  * deployment with NEXT_PUBLIC_SITE_URL if the domain changes.
  */
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://pipilintu.com"
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://pipilintu.com"
 
 /**
  * Shared social preview card — a 1200×630 crop of the crew rowing the balsa.

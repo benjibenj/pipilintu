@@ -1,9 +1,10 @@
+import Image from "next/image"
 import Link from "next/link"
 import { Mail, MessageCircle } from "lucide-react"
 
 import { InstagramIcon } from "@/components/icons/instagram"
 import { siteContent } from "@/lib/content/site.fr"
-import { CONTACT, NAV_ITEMS } from "@/lib/constants"
+import { CONTACT, NAV_ITEMS, SOLIDREAM_URL } from "@/lib/constants"
 import { cn } from "@/lib/utils"
 
 type FooterProps = {
@@ -41,13 +42,22 @@ export function Footer({ className }: FooterProps) {
     <footer className={cn("border-t border-border/60 bg-card/40", className)}>
       <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
         <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
-          <div>
-            <p className="font-heading text-lg tracking-widest uppercase">
-              {footer.copyright}
-            </p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {footer.tagline}
-            </p>
+          <div className="flex items-start gap-3">
+            <Image
+              src="/images/logos/logo-white.png"
+              alt=""
+              width={534}
+              height={468}
+              className="mt-0.5 h-8 w-auto shrink-0"
+            />
+            <div>
+              <p className="font-heading text-lg tracking-widest uppercase">
+                {footer.copyright}
+              </p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {footer.tagline}
+              </p>
+            </div>
           </div>
 
           <nav aria-label="Navigation pied de page">
@@ -99,6 +109,26 @@ export function Footer({ className }: FooterProps) {
             © {new Date().getFullYear()} Expédition Pipilintu. Tous droits
             réservés.
           </p>
+        </div>
+
+        <div className="mt-6 flex items-center justify-center gap-3 border-t border-border/60 pt-6">
+          <p className="text-xs text-muted-foreground">{footer.producedWith}</p>
+          <Link
+            href={SOLIDREAM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={footer.solidreamLabel}
+            title={footer.solidreamLabel}
+            className="rounded-md transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+          >
+            <Image
+              src="/images/logos/2013.08.08_Logo_solidream_white-transparentBg-1024x800.png"
+              alt="Solidream"
+              width={1024}
+              height={800}
+              className="h-8 w-auto"
+            />
+          </Link>
         </div>
       </div>
     </footer>
