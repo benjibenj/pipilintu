@@ -35,6 +35,17 @@ export function SynopsisSection() {
               className="h-auto w-full rounded-lg ring-1 ring-border/60"
             />
             <figcaption className="mt-2 text-xs leading-relaxed text-muted-foreground">
+              
+              <a
+                href={itinerary.mapLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-foreground transition-colors"
+              >
+                {itinerary.mapLinkLabel}
+                
+              </a>
+              <br />
               {itinerary.caption}
             </figcaption>
           </figure>
