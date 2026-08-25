@@ -16,6 +16,7 @@ type GalleryCarouselProps = {
 /**
  * Auto-advancing photo carousel. Scroll-snap does the paging so it stays
  * swipeable and keyboard-scrollable; the timer only nudges scrollLeft.
+ * One slide is visible on phones, two from `sm` and three from `lg`.
  * Autoplay pauses on hover, on focus, when off-screen, and for users who
  * asked for reduced motion.
  */
@@ -27,6 +28,14 @@ export function GalleryCarousel({ className }: GalleryCarouselProps) {
   const [visible, setVisible] = useState(true)
 
   const count = GALLERY_IMAGES.length
+
+  // The last slides can never scroll to the start edge once several are
+  // visible at once, so wrap on the scroll position rather than on the index.
+  const atEnd = useCallback(() => {
+    const track = trackRef.current
+    if (!track) return false
+    return track.scrollLeft + track.clientWidth >= track.scrollWidth - 2
+  }, [])
 
   const scrollToIndex = useCallback((next: number) => {
     const track = trackRef.current
@@ -66,13 +75,13 @@ export function GalleryCarousel({ className }: GalleryCarouselProps) {
     if (!playing || interacting || !visible) return
     const timer = window.setInterval(() => {
       setIndex((current) => {
-        const next = (current + 1) % count
+        const next = atEnd() ? 0 : (current + 1) % count
         scrollToIndex(next)
         return next
       })
     }, AUTOPLAY_MS)
     return () => window.clearInterval(timer)
-  }, [playing, interacting, visible, count, scrollToIndex])
+  }, [playing, interacting, visible, count, scrollToIndex, atEnd])
 
   // Keep the active dot in sync with manual scrolling and swipes
   const handleScroll = () => {
@@ -92,7 +101,7 @@ export function GalleryCarousel({ className }: GalleryCarouselProps) {
   }
 
   const step = (delta: number) => {
-    const next = (index + delta + count) % count
+    const next = delta > 0 && atEnd() ? 0 : (index + delta + count) % count
     setIndex(next)
     scrollToIndex(next)
   }
@@ -119,14 +128,14 @@ export function GalleryCarousel({ className }: GalleryCarouselProps) {
             key={image.src}
             aria-roledescription="diapositive"
             aria-label={`${i + 1} sur ${count}`}
-            className="w-full shrink-0 snap-start"
+            className="w-full shrink-0 snap-start sm:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)]"
           >
             <Image
               src={image.src}
               alt={image.alt}
               width={image.width}
               height={image.height}
-              sizes="(max-width: 1024px) 100vw, 1024px"
+              sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 320px"
               className="aspect-[16/10] w-full rounded-xl object-cover ring-1 ring-border/60"
               priority={i === 0}
             />
