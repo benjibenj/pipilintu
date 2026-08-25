@@ -6,10 +6,27 @@ import { Footer } from "@/components/layout/footer"
 import { Header } from "@/components/layout/header"
 import { formatBlogDate, getBlogPosts } from "@/lib/blog"
 import { siteContent } from "@/lib/content/site.fr"
+import { OG_IMAGE } from "@/lib/constants"
 
 export const metadata: Metadata = {
   title: `${siteContent.blog.title} — Pipilintu`,
   description: siteContent.blog.description,
+  alternates: { canonical: "/blog" },
+  openGraph: {
+    title: `${siteContent.blog.title} — Pipilintu`,
+    description: siteContent.blog.description,
+    url: "/blog",
+    locale: "fr_FR",
+    type: "website",
+    siteName: "Pipilintu",
+    images: [OG_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteContent.blog.title} — Pipilintu`,
+    description: siteContent.blog.description,
+    images: [OG_IMAGE.url],
+  },
 }
 
 export default function BlogPage() {

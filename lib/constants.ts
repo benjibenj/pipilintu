@@ -135,3 +135,15 @@ export const siteMeta = siteContent.meta
  * deployment with NEXT_PUBLIC_SITE_URL if the domain changes.
  */
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://pipilintu.com"
+
+/**
+ * Shared social preview card — a 1200×630 crop of the crew rowing the balsa.
+ * Used as the default for every route, and as the fallback for blog posts that
+ * ship without a cover image.
+ */
+export const OG_IMAGE = {
+  url: "/images/og.jpg",
+  width: 1200,
+  height: 630,
+  alt: "Deux équipiers manœuvrent les longues rames de la balsa Pipilintu sur un fleuve amazonien",
+} as const

@@ -8,6 +8,7 @@ import { Footer } from "@/components/layout/footer"
 import { Header } from "@/components/layout/header"
 import { formatBlogDate, getBlogPost, getBlogPosts } from "@/lib/blog"
 import { siteContent } from "@/lib/content/site.fr"
+import { OG_IMAGE } from "@/lib/constants"
 
 type PostPageProps = {
   params: Promise<{ slug: string }>
@@ -24,16 +25,28 @@ export async function generateMetadata({
   const post = getBlogPost(slug)
   if (!post) return {}
 
+  const images = post.cover ? [post.cover] : [OG_IMAGE]
+
   return {
     title: `${post.title} — Pipilintu`,
     description: post.excerpt,
+    alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
       title: post.title,
       description: post.excerpt,
+      url: `/blog/${post.slug}`,
+      locale: "fr_FR",
       type: "article",
+      siteName: "Pipilintu",
       publishedTime: post.date,
       authors: [post.author],
-      images: post.cover ? [post.cover] : undefined,
+      images,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: [post.cover ?? OG_IMAGE.url],
     },
   }
 }
