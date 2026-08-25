@@ -64,7 +64,10 @@ function readImageSize(publicPath: string): ImageSize | null {
         marker !== 0xc8 &&
         marker !== 0xcc
       ) {
-        return { height: buf.readUInt16BE(i + 5), width: buf.readUInt16BE(i + 7) }
+        return {
+          height: buf.readUInt16BE(i + 5),
+          width: buf.readUInt16BE(i + 7),
+        }
       }
       i += 2 + buf.readUInt16BE(i + 2)
     }
@@ -73,8 +76,13 @@ function readImageSize(publicPath: string): ImageSize | null {
   return null
 }
 
-/** First real paragraph, with inline markdown stripped for plain-text display */
-function toExcerpt(markdown: string, maxLength = 220): string {
+/**
+ * First real paragraph, with inline markdown stripped for plain-text display.
+ * Also doubles as the og:description/twitter:description for post pages, so
+ * the default stays under the ~155-160 char convention those respect before
+ * truncating.
+ */
+function toExcerpt(markdown: string, maxLength = 155): string {
   const paragraph = markdown
     .split(/\n{2,}/)
     .map((block) => block.trim())
@@ -131,7 +139,9 @@ function readPost(locale: BlogLocale, filename: string): BlogPost {
 }
 
 /** All posts for a locale, newest first */
-export function getBlogPosts(locale: BlogLocale = PUBLISHED_LOCALE): BlogPost[] {
+export function getBlogPosts(
+  locale: BlogLocale = PUBLISHED_LOCALE
+): BlogPost[] {
   const dir = path.join(BLOG_DIR, locale)
   if (!fs.existsSync(dir)) return []
 

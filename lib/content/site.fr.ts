@@ -2,7 +2,7 @@ export const siteContent = {
   meta: {
     title: "Pipilintu — Des Andes à l'Atlantique",
     description:
-      "Film documentaire sur l'expédition Pipilintu : 3 600 km à la rame et à la voile sur une balsa traditionnelle en totora, des Andes boliviennes jusqu'à l'Atlantique.",
+      "Film documentaire sur l'expédition Pipilintu : 3 600 km à la rame et à la voile sur une balsa traditionnelle en totora, des Andes à l'Atlantique.",
   },
   hero: {
     title: "Pipilintu",
