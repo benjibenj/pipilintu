@@ -1,5 +1,6 @@
 import { Footer } from "@/components/layout/footer"
 import { Header } from "@/components/layout/header"
+import { BlogPreviewSection } from "@/components/sections/blog-preview"
 import { HeroSection } from "@/components/sections/hero"
 import { ProjectionDatesSection } from "@/components/sections/projections"
 import { SynopsisSection } from "@/components/sections/synopsis"
@@ -14,6 +15,7 @@ export default function HomePage() {
         <SynopsisSection />
         <ProjectionDatesSection />
         <TeamSection />
+        <BlogPreviewSection className="bg-card/30" />
       </main>
       <Footer />
     </>
