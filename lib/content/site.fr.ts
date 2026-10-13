@@ -23,15 +23,16 @@ export const siteContent = {
   synopsis: {
     title: "Synopsis",
     facts: [
-      { label: "Durée", value: "52 min" },
+      { label: "Durée", value: "56 min" },
       { label: "Sortie", value: "Automne 2026" },
       { label: "Durée tournage", value: "4 mois" },
     ],
     body: [
-      "Des Andes à l'Atlantique, un même courant relie des mondes que tout semble opposer. En découvrant les balsas de totora, embarcations de roseaux construites selon un savoir-faire ancestral transmis sur les rives du lac Titicaca, Fabien imagine un pari audacieux : rejoindre l'océan à la rame en empruntant les anciennes voies fluviales qui traversent l'Amazonie. Autour de lui se forme un équipage de cinq voyageurs, prêt à donner vie à cette aventure hors du commun.",
-      "À bord de Pipilintu, leur éphémère catamaran signifiant « Papillon », l'expédition dépasse rapidement le simple défi sportif. Guidé par le fleuve, l'équipage traverse une mosaïque de territoires et de communautés dont les destins restent intimement liés aux eaux amazoniennes.",
-      "Mais au fil du voyage, l'inattendu s'invite : vivant au contact quotidien des orpailleurs, escortés par la Marine bolivienne, pris pour des espions au Brésil et propulsés malgré eux sous les projecteurs, ils voient leur traversée prendre une dimension qu'ils n'avaient jamais imaginée, tandis que leur embarcation se dégrade inexorablement, comme les certitudes du départ, au gré des méandres amazoniens.",
-      "Entre film d'aventure, carnet de voyage et chronique humaine, Pipilintu suit une expédition où chaque rencontre déplace le regard. Bien plus qu'un simple itinéraire vers l'Atlantique, le fleuve devient un espace de dialogue entre territoires, cultures et visions du monde, révélant une Amazonie contemporaine, vivante et loin des clichés.",
+      "Fabien a un rêve en tête : naviguer sur l’immense fleuve Amazone, en silence et à la rame.",
+      "Alors qu’il voyage au lac Titicaca, il découvre le bateau idéal pour réaliser son rêve : une « balsa de totora », une embarcation traditionnelle entièrement conçue en roseau.",
+      "Loin des clichés de l’aventure amazonienne, l’équipage de Pipilintu se retrouve plongé au cœur d’un territoire vivant, connecté et profondément humain.",
+      "Accompagné par la marine bolivienne, l’équipage se retrouve malgré lui au cœur d’une étrange affaire d’espionnage, alimentée par une rumeur qui circule dans les médias locaux.",
+      "Pipilintu, c’est l’odyssée silencieuse et organique de cinq aventuriers sur un bateau de roseaux, dont la traversée prend une dimension inimaginable. Comme un papillon au terme de sa migration, leur embarcation éphémère se décompose, laissant planer le doute sur leur objectif initial, situé à 3 600 kilomètres : l’Atlantique.",
     ],
   },
   /** Map shown in the synopsis facts column — no longer its own section */
