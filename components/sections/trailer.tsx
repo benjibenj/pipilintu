@@ -1,9 +1,11 @@
 import { Film } from "lucide-react"
 
-import { siteContent } from "@/lib/content/site.fr"
+import { getSiteContent } from "@/lib/content"
+import type { Locale } from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 
 type TrailerProps = {
+  locale: Locale
   /** YouTube or Vimeo URL — when provided, renders the embed instead of placeholder */
   trailerUrl?: string
   className?: string
@@ -41,8 +43,8 @@ function getEmbedUrl(url: string): string | null {
 }
 
 /** Trailer player — embedded in the hero, above the CTA */
-export function Trailer({ trailerUrl, className }: TrailerProps) {
-  const { trailer } = siteContent
+export function Trailer({ locale, trailerUrl, className }: TrailerProps) {
+  const { trailer } = getSiteContent(locale)
   const embedUrl = trailerUrl ? getEmbedUrl(trailerUrl) : null
 
   return (

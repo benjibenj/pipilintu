@@ -5,17 +5,22 @@ import { ArrowRight } from "lucide-react"
 import { Section } from "@/components/layout/section"
 import { Button } from "@/components/ui/button"
 import { formatBlogDate, getBlogPosts } from "@/lib/blog"
-import { siteContent } from "@/lib/content/site.fr"
+import { getSiteContent } from "@/lib/content"
+import { localePath, type Locale } from "@/lib/i18n"
 
 const PREVIEW_COUNT = 3
 
 type BlogPreviewSectionProps = {
+  locale: Locale
   className?: string
 }
 
-export function BlogPreviewSection({ className }: BlogPreviewSectionProps) {
-  const { blog } = siteContent
-  const posts = getBlogPosts().slice(0, PREVIEW_COUNT)
+export function BlogPreviewSection({
+  locale,
+  className,
+}: BlogPreviewSectionProps) {
+  const { blog } = getSiteContent(locale)
+  const posts = getBlogPosts(locale).slice(0, PREVIEW_COUNT)
 
   if (posts.length === 0) return null
 
@@ -33,7 +38,7 @@ export function BlogPreviewSection({ className }: BlogPreviewSectionProps) {
         {posts.map((post) => (
           <li key={post.slug}>
             <Link
-              href={`/blog/${post.slug}`}
+              href={localePath(locale, `/blog/${post.slug}`)}
               className="group flex h-full flex-col overflow-hidden rounded-xl bg-card/60 ring-1 ring-border/60 transition-colors hover:ring-accent/60 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
             >
               {post.cover ? (
@@ -57,7 +62,7 @@ export function BlogPreviewSection({ className }: BlogPreviewSectionProps) {
                   dateTime={post.date}
                   className="text-xs tracking-wide text-muted-foreground uppercase"
                 >
-                  {formatBlogDate(post.date)}
+                  {formatBlogDate(post.date, locale)}
                 </time>
                 <h3 className="mt-2 font-section text-lg leading-tight font-semibold text-foreground">
                   {post.title}
@@ -72,7 +77,11 @@ export function BlogPreviewSection({ className }: BlogPreviewSectionProps) {
       </ul>
 
       <div className="mt-10 flex justify-center">
-        <Button variant="outline" size="lg" render={<Link href="/blog" />}>
+        <Button
+          variant="outline"
+          size="lg"
+          render={<Link href={localePath(locale, "/blog")} />}
+        >
           {blog.backToBlog}
           <ArrowRight aria-hidden="true" className="size-4" />
         </Button>

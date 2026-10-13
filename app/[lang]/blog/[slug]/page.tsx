@@ -6,23 +6,40 @@ import type { Metadata } from "next"
 import { Markdown } from "@/components/blog/markdown"
 import { Footer } from "@/components/layout/footer"
 import { Header } from "@/components/layout/header"
-import { formatBlogDate, getBlogPost, getBlogPosts } from "@/lib/blog"
-import { siteContent } from "@/lib/content/site.fr"
+import {
+  formatBlogDate,
+  getBlogPost,
+  getBlogPosts,
+  getPostTranslations,
+} from "@/lib/blog"
+import { getSiteContent } from "@/lib/content"
 import { OG_IMAGE } from "@/lib/constants"
+import {
+  alternates,
+  hasLocale,
+  LOCALE_META,
+  LOCALES,
+  localePath,
+} from "@/lib/i18n"
 
 type PostPageProps = {
-  params: Promise<{ slug: string }>
+  params: Promise<{ lang: string; slug: string }>
 }
 
 export function generateStaticParams() {
-  return getBlogPosts().map((post) => ({ slug: post.slug }))
+  return LOCALES.flatMap((lang) =>
+    getBlogPosts(lang).map((post) => ({ lang, slug: post.slug }))
+  )
 }
+
+export const dynamicParams = false
 
 export async function generateMetadata({
   params,
 }: PostPageProps): Promise<Metadata> {
-  const { slug } = await params
-  const post = getBlogPost(slug)
+  const { lang, slug } = await params
+  if (!hasLocale(lang)) return {}
+  const post = getBlogPost(slug, lang)
   if (!post) return {}
 
   const images = post.cover ? [post.cover] : [OG_IMAGE]
@@ -30,12 +47,12 @@ export async function generateMetadata({
   return {
     title: `${post.title} — Pipilintu`,
     description: post.excerpt,
-    alternates: { canonical: `/blog/${post.slug}` },
+    alternates: alternates(lang, getPostTranslations(post.translationKey)),
     openGraph: {
       title: post.title,
       description: post.excerpt,
-      url: `/blog/${post.slug}`,
-      locale: "fr_FR",
+      url: localePath(lang, `/blog/${post.slug}`),
+      locale: LOCALE_META[lang].og,
       type: "article",
       siteName: "Pipilintu",
       publishedTime: post.date,
@@ -52,19 +69,23 @@ export async function generateMetadata({
 }
 
 export default async function BlogPostPage({ params }: PostPageProps) {
-  const { slug } = await params
-  const post = getBlogPost(slug)
+  const { lang, slug } = await params
+  if (!hasLocale(lang)) notFound()
+  const post = getBlogPost(slug, lang)
   if (!post) notFound()
 
-  const { blog } = siteContent
+  const { blog } = getSiteContent(lang)
 
   return (
     <>
-      <Header />
-      <main id="main-content" className="mx-auto max-w-3xl px-4 py-12 sm:px-6 md:py-16">
+      <Header locale={lang} paths={getPostTranslations(post.translationKey)} />
+      <main
+        id="main-content"
+        className="mx-auto max-w-3xl px-4 py-12 sm:px-6 md:py-16"
+      >
         <Link
-          href="/blog"
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          href={localePath(lang, "/blog")}
+          className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
         >
           <ArrowLeft className="size-4" aria-hidden="true" />
           {blog.backToBlog}
@@ -76,7 +97,9 @@ export default async function BlogPostPage({ params }: PostPageProps) {
               {post.title}
             </h1>
             <p className="mt-4 flex flex-wrap items-center gap-x-2 text-sm text-muted-foreground">
-              <time dateTime={post.date}>{formatBlogDate(post.date)}</time>
+              <time dateTime={post.date}>
+                {formatBlogDate(post.date, lang)}
+              </time>
               <span aria-hidden="true">·</span>
               <span>
                 {blog.byline} {post.author}
@@ -90,7 +113,7 @@ export default async function BlogPostPage({ params }: PostPageProps) {
           </div>
         </article>
       </main>
-      <Footer />
+      <Footer locale={lang} />
     </>
   )
 }

@@ -33,8 +33,8 @@ const OLD_BLOG_SLUG_REDIRECTS: Record<string, string> = {
  * homepage sections, or drops entirely. Crew profiles fold into the Team
  * section; the boat/safety/press pages have no replacement content here, so
  * they fall back to the homepage rather than 404ing on indexed URLs.
- * Non-French locale trees (/en, /es, /pt-br, ~50 URLs) are intentionally
- * left unredirected for now — out of scope until those routes exist.
+ * The old site's non-French trees lived under /en, /es and /pt-br: /en and
+ * /es now exist again, and /pt-br is sent to the new /pt.
  */
 const OLD_PAGE_REDIRECTS: Array<{ source: string; destination: string }> = [
   { source: "/blog-fr", destination: "/blog" },
@@ -47,11 +47,35 @@ const OLD_PAGE_REDIRECTS: Array<{ source: string; destination: string }> = [
   { source: "/balsa-fr", destination: "/" },
   { source: "/securite", destination: "/" },
   { source: "/media", destination: "/" },
+  { source: "/pt-br", destination: "/pt" },
+  { source: "/pt-br/:path*", destination: "/pt" },
 ]
 
 const nextConfig: NextConfig = {
+  experimental: {
+    // Every layout sits under app/[lang], so unmatched URLs need their own
+    // 404 page: app/global-not-found.tsx
+    globalNotFound: true,
+  },
+  /**
+   * French is served without a prefix: every page lives under app/[lang], and
+   * these map the unprefixed URLs onto /fr internally. The address bar keeps
+   * showing /, /blog…
+   */
+  async rewrites() {
+    return {
+      beforeFiles: [
+        { source: "/", destination: "/fr" },
+        { source: "/blog", destination: "/fr/blog" },
+        { source: "/blog/:slug", destination: "/fr/blog/:slug" },
+      ],
+    }
+  },
   async redirects() {
     return [
+      // /fr/... would duplicate the unprefixed French pages
+      { source: "/fr", destination: "/", permanent: true },
+      { source: "/fr/:path*", destination: "/:path*", permanent: true },
       ...Object.entries(OLD_BLOG_SLUG_REDIRECTS).map(([oldSlug, newSlug]) => ({
         source: `/blog/${oldSlug}`,
         destination: `/blog/${newSlug}`,

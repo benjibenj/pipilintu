@@ -3,12 +3,16 @@ import path from "node:path"
 
 import matter from "gray-matter"
 
-/** Locales present in lib/content/blog — only FR is surfaced on the site for now */
-export const BLOG_LOCALES = ["fr", "en", "es", "pt"] as const
-export type BlogLocale = (typeof BLOG_LOCALES)[number]
+import {
+  LOCALE_META,
+  LOCALES,
+  localePath,
+  type Locale,
+  type LocalizedPaths,
+} from "@/lib/i18n"
 
-/** The single locale currently published */
-export const PUBLISHED_LOCALE: BlogLocale = "fr"
+/** One folder per language in lib/content/blog */
+export type BlogLocale = Locale
 
 export type BlogPost = {
   slug: string
@@ -139,9 +143,7 @@ function readPost(locale: BlogLocale, filename: string): BlogPost {
 }
 
 /** All posts for a locale, newest first */
-export function getBlogPosts(
-  locale: BlogLocale = PUBLISHED_LOCALE
-): BlogPost[] {
+export function getBlogPosts(locale: BlogLocale): BlogPost[] {
   const dir = path.join(BLOG_DIR, locale)
   if (!fs.existsSync(dir)) return []
 
@@ -152,18 +154,33 @@ export function getBlogPosts(
     .sort((a, b) => b.date.localeCompare(a.date))
 }
 
-export function getBlogPost(
-  slug: string,
-  locale: BlogLocale = PUBLISHED_LOCALE
-): BlogPost | null {
+export function getBlogPost(slug: string, locale: BlogLocale): BlogPost | null {
   const file = path.join(BLOG_DIR, locale, `${slug}.md`)
   if (!fs.existsSync(file)) return null
   return readPost(locale, `${slug}.md`)
 }
 
-/** Long-form French date, e.g. "28 juillet 2025" */
-export function formatBlogDate(isoDate: string): string {
-  return new Intl.DateTimeFormat("fr-FR", {
+/**
+ * URL of the same article in every language, matched on translationKey. A
+ * language missing that article falls back to its blog index.
+ */
+export function getPostTranslations(translationKey: string): LocalizedPaths {
+  return Object.fromEntries(
+    LOCALES.map((locale) => {
+      const match = getBlogPosts(locale).find(
+        (post) => post.translationKey === translationKey
+      )
+      return [
+        locale,
+        localePath(locale, match ? `/blog/${match.slug}` : "/blog"),
+      ]
+    })
+  ) as LocalizedPaths
+}
+
+/** Long-form date, e.g. "28 juillet 2025" / "28 July 2025" */
+export function formatBlogDate(isoDate: string, locale: BlogLocale): string {
+  return new Intl.DateTimeFormat(LOCALE_META[locale].tag, {
     day: "numeric",
     month: "long",
     year: "numeric",

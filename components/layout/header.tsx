@@ -1,26 +1,33 @@
-"use client"
-
 import Link from "next/link"
-import { Menu } from "lucide-react"
-import { useState } from "react"
 
-import { Button } from "@/components/ui/button"
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
+import { LanguageSwitcher } from "@/components/layout/language-switcher"
+import { MobileNav } from "@/components/layout/mobile-nav"
+import { getSiteContent } from "@/lib/content"
 import { NAV_ITEMS } from "@/lib/constants"
+import { localePath, type Locale, type LocalizedPaths } from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 
 type HeaderProps = {
+  locale: Locale
+  /** The current page in every language, for the language switcher */
+  paths: LocalizedPaths
   className?: string
 }
 
-export function Header({ className }: HeaderProps) {
-  const [open, setOpen] = useState(false)
+/** Builds the localized nav links, shared with the footer */
+export function navLinks(locale: Locale) {
+  const { nav } = getSiteContent(locale)
+  return NAV_ITEMS.map((item) => ({
+    href: item.path.startsWith("/#")
+      ? `${localePath(locale)}${item.path.slice(1)}`
+      : localePath(locale, item.path),
+    label: nav[item.key],
+  }))
+}
+
+export function Header({ locale, paths, className }: HeaderProps) {
+  const { ui } = getSiteContent(locale)
+  const items = navLinks(locale)
 
   return (
     <header
@@ -31,62 +38,35 @@ export function Header({ className }: HeaderProps) {
     >
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6">
         <Link
-          href="/"
-          className="font-heading text-lg tracking-widest text-foreground uppercase transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          href={localePath(locale)}
+          className="font-heading text-lg tracking-widest text-foreground uppercase transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
         >
           Pipilintu
         </Link>
 
-        {/* Desktop navigation */}
-        <nav
-          aria-label="Navigation principale"
-          className="hidden items-center gap-1 lg:flex"
-        >
-          {NAV_ITEMS.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+        <div className="hidden items-center gap-4 lg:flex">
+          <nav aria-label={ui.mainNav} className="flex items-center gap-1">
+            {items.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+          <LanguageSwitcher
+            locale={locale}
+            paths={paths}
+            label={ui.language}
+            className="border-l border-border/60 pl-3"
+          />
+        </div>
 
-        {/* Mobile navigation */}
-        <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger
-            render={
-              <Button
-                variant="ghost"
-                size="icon"
-                className="lg:hidden"
-                aria-label="Ouvrir le menu"
-              />
-            }
-          >
-            <Menu aria-hidden="true" />
-          </SheetTrigger>
-          <SheetContent side="right" className="w-full sm:max-w-xs">
-            <SheetHeader>
-              <SheetTitle className="font-section tracking-wide">
-                Menu
-              </SheetTitle>
-            </SheetHeader>
-            <nav aria-label="Navigation mobile" className="flex flex-col gap-1 px-4">
-              {NAV_ITEMS.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className="rounded-md px-3 py-3 text-base text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-          </SheetContent>
-        </Sheet>
+        <MobileNav items={items} labels={ui}>
+          <LanguageSwitcher locale={locale} paths={paths} label={ui.language} />
+        </MobileNav>
       </div>
     </header>
   )

@@ -3,16 +3,19 @@ import Link from "next/link"
 import { Mail, MessageCircle } from "lucide-react"
 
 import { InstagramIcon } from "@/components/icons/instagram"
-import { siteContent } from "@/lib/content/site.fr"
-import { CONTACT, NAV_ITEMS, SOLIDREAM_URL } from "@/lib/constants"
+import { navLinks } from "@/components/layout/header"
+import { getSiteContent } from "@/lib/content"
+import { CONTACT, SOLIDREAM_URL } from "@/lib/constants"
+import type { Locale } from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 
 type FooterProps = {
+  locale: Locale
   className?: string
 }
 
-export function Footer({ className }: FooterProps) {
-  const { contact, footer } = siteContent
+export function Footer({ locale, className }: FooterProps) {
+  const { contact, footer, ui } = getSiteContent(locale)
 
   const socialLinks = [
     {
@@ -60,9 +63,9 @@ export function Footer({ className }: FooterProps) {
             </div>
           </div>
 
-          <nav aria-label="Navigation pied de page">
+          <nav aria-label={ui.footerNav}>
             <ul className="flex flex-wrap gap-x-4 gap-y-2">
-              {NAV_ITEMS.map((item) => (
+              {navLinks(locale).map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
@@ -106,8 +109,7 @@ export function Footer({ className }: FooterProps) {
           </ul>
 
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Expédition Pipilintu. Tous droits
-            réservés.
+            © {new Date().getFullYear()} {footer.copyright}. {ui.rights}
           </p>
         </div>
 

@@ -5,12 +5,13 @@ import { ArrowUpRight, Images } from "lucide-react"
 import { Section } from "@/components/layout/section"
 import { GalleryCarousel } from "@/components/sections/gallery-carousel"
 import { Button } from "@/components/ui/button"
+import { getSiteContent } from "@/lib/content"
 import { PHOTO_ALBUM_URL } from "@/lib/constants"
-import { siteContent } from "@/lib/content/site.fr"
+import type { Locale } from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 
-export function SynopsisSection() {
-  const { synopsis, itinerary, gallery } = siteContent
+export function SynopsisSection({ locale }: { locale: Locale }) {
+  const { synopsis, itinerary, gallery } = getSiteContent(locale)
 
   return (
     <Section id="synopsis" title={synopsis.title}>
@@ -39,15 +40,13 @@ export function SynopsisSection() {
               className="h-auto w-full rounded-lg ring-1 ring-border/60"
             />
             <figcaption className="mt-2 text-xs leading-relaxed text-muted-foreground">
-              
               <a
                 href={itinerary.mapLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline hover:text-foreground transition-colors"
+                className="underline transition-colors hover:text-foreground"
               >
                 {itinerary.mapLinkLabel}
-                
               </a>
               <br />
               {itinerary.caption}
@@ -72,7 +71,7 @@ export function SynopsisSection() {
         </div>
       </div>
 
-      <GalleryCarousel className="mt-16 md:mt-20" />
+      <GalleryCarousel labels={gallery} className="mt-16 md:mt-20" />
 
       <div className="mt-8 flex justify-center">
         <Button

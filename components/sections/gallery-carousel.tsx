@@ -4,12 +4,16 @@ import Image from "next/image"
 import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react"
 import { useCallback, useEffect, useRef, useState } from "react"
 
+import { fill } from "@/lib/content"
+import type { SiteContent } from "@/lib/content/site.fr"
 import { GALLERY_IMAGES } from "@/lib/constants"
 import { cn } from "@/lib/utils"
 
 const AUTOPLAY_MS = 4500
 
 type GalleryCarouselProps = {
+  /** Translated alt texts and control labels */
+  labels: SiteContent["gallery"]
   className?: string
 }
 
@@ -20,7 +24,7 @@ type GalleryCarouselProps = {
  * Autoplay pauses on hover, on focus, when off-screen, and for users who
  * asked for reduced motion.
  */
-export function GalleryCarousel({ className }: GalleryCarouselProps) {
+export function GalleryCarousel({ labels, className }: GalleryCarouselProps) {
   const trackRef = useRef<HTMLUListElement>(null)
   const [index, setIndex] = useState(0)
   const [playing, setPlaying] = useState(true)
@@ -114,25 +118,25 @@ export function GalleryCarousel({ className }: GalleryCarouselProps) {
       onFocusCapture={() => setInteracting(true)}
       onBlurCapture={() => setInteracting(false)}
       role="region"
-      aria-roledescription="carrousel"
-      aria-label="Images de l'expédition"
+      aria-roledescription={labels.carousel}
+      aria-label={labels.label}
     >
       <ul
         ref={trackRef}
         onScroll={handleScroll}
-        className="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth rounded-xl [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex snap-x snap-mandatory [scrollbar-width:none] gap-4 overflow-x-auto scroll-smooth rounded-xl [&::-webkit-scrollbar]:hidden"
         role="list"
       >
         {GALLERY_IMAGES.map((image, i) => (
           <li
             key={image.src}
-            aria-roledescription="diapositive"
-            aria-label={`${i + 1} sur ${count}`}
+            aria-roledescription={labels.slide}
+            aria-label={fill(labels.position, { n: i + 1, total: count })}
             className="w-full shrink-0 snap-start sm:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)]"
           >
             <Image
               src={image.src}
-              alt={image.alt}
+              alt={labels.alts[image.src] ?? ""}
               width={image.width}
               height={image.height}
               sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 320px"
@@ -148,26 +152,24 @@ export function GalleryCarousel({ className }: GalleryCarouselProps) {
           <button
             type="button"
             onClick={() => step(-1)}
-            aria-label="Image précédente"
-            className="flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            aria-label={labels.previous}
+            className="flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
           >
             <ChevronLeft className="size-5" aria-hidden="true" />
           </button>
           <button
             type="button"
             onClick={() => step(1)}
-            aria-label="Image suivante"
-            className="flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            aria-label={labels.next}
+            className="flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
           >
             <ChevronRight className="size-5" aria-hidden="true" />
           </button>
           <button
             type="button"
             onClick={() => setPlaying((value) => !value)}
-            aria-label={
-              playing ? "Mettre le diaporama en pause" : "Lancer le diaporama"
-            }
-            className="flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            aria-label={playing ? labels.pause : labels.play}
+            className="flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
           >
             {playing ? (
               <Pause className="size-4" aria-hidden="true" />
@@ -186,10 +188,10 @@ export function GalleryCarousel({ className }: GalleryCarouselProps) {
                   setIndex(i)
                   scrollToIndex(i)
                 }}
-                aria-label={`Aller à l'image ${i + 1}`}
+                aria-label={fill(labels.goTo, { n: i + 1 })}
                 aria-current={i === index}
                 className={cn(
-                  "h-1.5 rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                  "h-1.5 rounded-full transition-all focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
                   i === index
                     ? "w-5 bg-accent"
                     : "w-1.5 bg-border hover:bg-muted-foreground"

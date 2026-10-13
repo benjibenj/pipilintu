@@ -1,8 +1,40 @@
 export const siteContent = {
   meta: {
+    keywords: [
+      "Pipilintu",
+      "film documentaire",
+      "expédition",
+      "balsa de totora",
+      "lac Titicaca",
+      "Amazone",
+      "Bolivie",
+      "Brésil",
+      "aventure",
+      "low-tech",
+      "documentaire aventure",
+    ],
+    ogImageAlt:
+      "Deux équipiers manœuvrent les longues rames de la balsa Pipilintu sur un fleuve amazonien",
     title: "Pipilintu — Des Andes à l'Atlantique",
     description:
       "Film documentaire sur l'expédition Pipilintu : 3 600 km à la rame et à la voile sur une balsa traditionnelle en totora, des Andes à l'Atlantique.",
+  },
+  nav: {
+    synopsis: "Synopsis",
+    projections: "Projections",
+    team: "Équipage",
+    blog: "Blog",
+  },
+  /** Screen-reader labels and small interface words */
+  ui: {
+    mainNav: "Navigation principale",
+    mobileNav: "Navigation mobile",
+    footerNav: "Navigation pied de page",
+    menu: "Menu",
+    openMenu: "Ouvrir le menu",
+    language: "Langue",
+    portraitOf: "Portrait de",
+    rights: "Tous droits réservés.",
   },
   hero: {
     title: "Pipilintu",
@@ -68,10 +100,53 @@ export const siteContent = {
     moreInfo: "Plus d'infos",
     mapLabel: "Voir le lieu sur la carte",
   },
-  /** Link to the full album, under the photo carousel */
   gallery: {
+    label: "Images de l'expédition",
+    carousel: "carrousel",
+    slide: "diapositive",
+    /** "{n} sur {total}" */
+    position: "{n} sur {total}",
+    previous: "Image précédente",
+    next: "Image suivante",
+    pause: "Mettre le diaporama en pause",
+    play: "Lancer le diaporama",
+    /** "Aller à l'image {n}" */
+    goTo: "Aller à l'image {n}",
     albumCta: "Voir l'album complet (308 photos)",
     albumLabel: "Album photo complet sur Google Photos (nouvel onglet)",
+    /** Alt text for each photo, keyed by its path in lib/constants.ts */
+    alts: {
+      "/images/gallery/20250514_155424.jpg":
+        "Une main tient une tige de totora coupée, révélant la moelle alvéolée qui donne sa flottabilité à la balsa",
+      "/images/gallery/IMG_20250608_090721_860.jpg":
+        "Un équipier et un artisan aymara ligaturent ensemble une botte de totora pendant la construction de la balsa",
+      "/images/gallery/IMG-20250711-WA0016.jpg":
+        "L'équipage et des militaires portent à l'épaule une coque de totora déchargée d'un camion, au bord du fleuve",
+      "/images/gallery/IMG-20250717-WA0041.jpg":
+        "Cérémonie de départ : un officier de l'Armada Boliviana accueille l'équipage en gilets de sauvetage devant la balsa",
+      "/images/gallery/dji_fly_20250716_124850_121_1754012171847_video(1).jpg":
+        "Vue aérienne de la balsa naviguant dans une gorge encaissée aux parois couvertes de forêt",
+      "/images/gallery/dji_fly_20250716_125114_124_1754012391243_video(1).jpg":
+        "Vue aérienne à la verticale du fleuve brun entre deux rives rocheuses, la balsa suivie de deux embarcations",
+      "/images/gallery/DSC03139.jpg":
+        "Deux équipiers manœuvrent les longues rames de bois sur le pont de la balsa, la forêt en arrière-plan",
+      "/images/gallery/DSC05646.jpg":
+        "La balsa au milieu du fleuve sous sa voile blanche peinte d'un grand papillon orange et du nom Pipilintu",
+      "/images/gallery/DSC05264.jpg":
+        "Au crépuscule, un membre de l'équipage échange avec trois enfants montés à bord de la balsa",
+      "/images/gallery/DSC04170.jpg":
+        "Une barge d'orpaillage bâchée de bleu, suivie de ses dragues, ancrée au milieu du fleuve amazonien",
+      "/images/gallery/DSC06162.jpg":
+        "Portrait d'un équipier au chapeau de toile, souriant, lors d'une escale dans un village de rive",
+      "/images/gallery/DSC05487.jpg":
+        "L'écusson brodé « Expedición Pipilintu » posé sur la coque de totora à demi immergée",
+      "/images/gallery/DSC05606.jpg":
+        "Quatre équipiers posent à bord de la balsa en déployant le drapeau Expedición Pipilintu",
+      "/images/gallery/PXL_20251014_204520898.MP.jpg":
+        "Trois équipiers devant la balsa échouée sur une berge de vase, au terme de l'expédition",
+      "/images/gallery/IMG-20251014-WA0016.jpg":
+        "La balsa, mât pavoisé, échouée sur une plage bordée de mangrove près de l'embouchure de l'Amazone",
+    } as Record<string, string>,
   },
   team: {
     title: "L'équipage",
@@ -138,6 +213,6 @@ export const siteContent = {
     producedWith: "Un film produit en collaboration avec",
     solidreamLabel: "Solidream — visiter le site (nouvel onglet)",
   },
-} as const
+}
 
 export type SiteContent = typeof siteContent

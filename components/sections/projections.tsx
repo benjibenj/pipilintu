@@ -11,8 +11,9 @@ import {
 import { Section } from "@/components/layout/section"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { siteContent } from "@/lib/content/site.fr"
+import { getSiteContent } from "@/lib/content"
 import { mailtoHref, SITE_URL, whatsappHref } from "@/lib/constants"
+import type { Locale } from "@/lib/i18n"
 import {
   dateParts,
   formatLongDate,
@@ -24,8 +25,8 @@ import {
   type Projection,
 } from "@/lib/projections"
 
-export function ProjectionDatesSection() {
-  const { projections } = siteContent
+export function ProjectionDatesSection({ locale }: { locale: Locale }) {
+  const { projections } = getSiteContent(locale)
   const all = getProjections()
   const { upcoming, past } = splitProjections(all)
 
@@ -65,7 +66,10 @@ export function ProjectionDatesSection() {
               <ul className="space-y-4" role="list">
                 {upcoming.map((projection) => (
                   <li key={`${projection.date}-${projection.event}`}>
-                    <UpcomingProjection projection={projection} />
+                    <UpcomingProjection
+                      projection={projection}
+                      locale={locale}
+                    />
                   </li>
                 ))}
               </ul>
@@ -89,7 +93,7 @@ export function ProjectionDatesSection() {
                       dateTime={projection.date}
                       className="shrink-0 text-muted-foreground tabular-nums sm:w-28"
                     >
-                      {formatShortDate(projection.date)}
+                      {formatShortDate(projection.date, locale)}
                     </time>
                     <span className="text-foreground/80">
                       {projection.event}
@@ -106,7 +110,7 @@ export function ProjectionDatesSection() {
         </div>
       )}
 
-      <OrganizeProjection />
+      <OrganizeProjection locale={locale} />
     </Section>
   )
 }
@@ -115,8 +119,8 @@ export function ProjectionDatesSection() {
  * Booking call-to-action, kept inside the Projections section so the dates and
  * the way to request one read as a single block.
  */
-function OrganizeProjection() {
-  const { organizeProjection } = siteContent
+function OrganizeProjection({ locale }: { locale: Locale }) {
+  const { organizeProjection } = getSiteContent(locale)
 
   return (
     <Card id="organize" className="mt-10 scroll-mt-20 ring-accent/25 md:mt-12">
@@ -173,9 +177,15 @@ function mapsHref({ venue, city }: Projection) {
  * Calendar-style date block on the left so the day reads at a glance, details
  * on the right. Past screenings use the compact list instead.
  */
-function UpcomingProjection({ projection }: { projection: Projection }) {
-  const { projections } = siteContent
-  const parts = dateParts(projection.date)
+function UpcomingProjection({
+  projection,
+  locale,
+}: {
+  projection: Projection
+  locale: Locale
+}) {
+  const { projections } = getSiteContent(locale)
+  const parts = dateParts(projection.date, locale)
 
   return (
     <Card>
@@ -203,8 +213,10 @@ function UpcomingProjection({ projection }: { projection: Projection }) {
                 aria-hidden="true"
               />
               <span className="first-letter:uppercase">
-                {formatLongDate(projection.date)}
-                {projection.time ? ` · ${formatTime(projection.time)}` : null}
+                {formatLongDate(projection.date, locale)}
+                {projection.time
+                  ? ` · ${formatTime(projection.time, locale)}`
+                  : null}
               </span>
             </li>
             <li className="flex items-start gap-2">

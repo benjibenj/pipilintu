@@ -3,6 +3,8 @@ import path from "node:path"
 
 import { parse } from "yaml"
 
+import { LOCALE_META, type Locale } from "@/lib/i18n"
+
 export type Projection = {
   /** ISO date, YYYY-MM-DD */
   date: string
@@ -160,31 +162,40 @@ export function toParisDateTime(date: string, time?: string): string {
   return `${date}T${time}:00${offset}`
 }
 
-/** "14:30" → "14h30", the French way */
-export function formatTime(time: string): string {
-  return time.replace(":", "h")
+/** "14:30" → "14h30" in French, the locale's usual clock elsewhere */
+export function formatTime(time: string, locale: Locale): string {
+  if (locale === "fr") return time.replace(":", "h")
+  return new Intl.DateTimeFormat(LOCALE_META[locale].tag, {
+    timeZone: "UTC",
+    hour: "numeric",
+    minute: "2-digit",
+  }).format(new Date(`1970-01-01T${time}:00Z`))
 }
 
-function formatDate(date: string, options: Intl.DateTimeFormatOptions) {
-  return new Intl.DateTimeFormat("fr-FR", {
+function formatDate(
+  date: string,
+  locale: Locale,
+  options: Intl.DateTimeFormatOptions
+) {
+  return new Intl.DateTimeFormat(LOCALE_META[locale].tag, {
     timeZone: "UTC",
     ...options,
   }).format(new Date(`${date}T12:00:00Z`))
 }
 
 /** Parts for the calendar-style date block: "dim.", "8", "nov.", "2026" */
-export function dateParts(date: string) {
+export function dateParts(date: string, locale: Locale) {
   return {
-    weekday: formatDate(date, { weekday: "short" }),
-    day: formatDate(date, { day: "numeric" }),
-    month: formatDate(date, { month: "short" }),
-    year: formatDate(date, { year: "numeric" }),
+    weekday: formatDate(date, locale, { weekday: "short" }),
+    day: formatDate(date, locale, { day: "numeric" }),
+    month: formatDate(date, locale, { month: "short" }),
+    year: formatDate(date, locale, { year: "numeric" }),
   }
 }
 
 /** "dimanche 8 novembre 2026" */
-export function formatLongDate(date: string): string {
-  return formatDate(date, {
+export function formatLongDate(date: string, locale: Locale): string {
+  return formatDate(date, locale, {
     weekday: "long",
     day: "numeric",
     month: "long",
@@ -193,6 +204,10 @@ export function formatLongDate(date: string): string {
 }
 
 /** "8 nov. 2026" */
-export function formatShortDate(date: string): string {
-  return formatDate(date, { day: "numeric", month: "short", year: "numeric" })
+export function formatShortDate(date: string, locale: Locale): string {
+  return formatDate(date, locale, {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  })
 }

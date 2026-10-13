@@ -1,10 +1,11 @@
 import Image from "next/image"
 
 import { Section } from "@/components/layout/section"
-import { siteContent } from "@/lib/content/site.fr"
+import { getSiteContent } from "@/lib/content"
+import type { Locale } from "@/lib/i18n"
 
-export function TeamSection() {
-  const { team } = siteContent
+export function TeamSection({ locale }: { locale: Locale }) {
+  const { team, ui } = getSiteContent(locale)
 
   return (
     <Section id="team" title={team.title}>
@@ -16,7 +17,7 @@ export function TeamSection() {
           >
             <Image
               src={member.image}
-              alt={`Portrait de ${member.name}`}
+              alt={`${ui.portraitOf} ${member.name}`}
               width={230}
               height={288}
               sizes="128px"

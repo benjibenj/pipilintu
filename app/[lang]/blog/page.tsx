@@ -1,42 +1,68 @@
 import Image from "next/image"
 import Link from "next/link"
+import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 
 import { Footer } from "@/components/layout/footer"
 import { Header } from "@/components/layout/header"
 import { formatBlogDate, getBlogPosts } from "@/lib/blog"
-import { siteContent } from "@/lib/content/site.fr"
+import { getSiteContent } from "@/lib/content"
 import { OG_IMAGE } from "@/lib/constants"
+import {
+  alternates,
+  hasLocale,
+  LOCALE_META,
+  localePath,
+  localizedPaths,
+} from "@/lib/i18n"
 
-export const metadata: Metadata = {
-  title: `${siteContent.blog.title} — Pipilintu`,
-  description: siteContent.blog.description,
-  alternates: { canonical: "/blog" },
-  openGraph: {
-    title: `${siteContent.blog.title} — Pipilintu`,
-    description: siteContent.blog.description,
-    url: "/blog",
-    locale: "fr_FR",
-    type: "website",
-    siteName: "Pipilintu",
-    images: [OG_IMAGE],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${siteContent.blog.title} — Pipilintu`,
-    description: siteContent.blog.description,
-    images: [OG_IMAGE.url],
-  },
+type BlogPageProps = {
+  params: Promise<{ lang: string }>
 }
 
-export default function BlogPage() {
-  const { blog } = siteContent
-  const posts = getBlogPosts()
+export async function generateMetadata({
+  params,
+}: BlogPageProps): Promise<Metadata> {
+  const { lang } = await params
+  if (!hasLocale(lang)) return {}
+  const { blog, meta } = getSiteContent(lang)
+  const title = `${blog.title} — Pipilintu`
+
+  return {
+    title,
+    description: blog.description,
+    alternates: alternates(lang, localizedPaths("/blog")),
+    openGraph: {
+      title,
+      description: blog.description,
+      url: localePath(lang, "/blog"),
+      locale: LOCALE_META[lang].og,
+      type: "website",
+      siteName: "Pipilintu",
+      images: [{ ...OG_IMAGE, alt: meta.ogImageAlt }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: blog.description,
+      images: [OG_IMAGE.url],
+    },
+  }
+}
+
+export default async function BlogPage({ params }: BlogPageProps) {
+  const { lang } = await params
+  if (!hasLocale(lang)) notFound()
+  const { blog } = getSiteContent(lang)
+  const posts = getBlogPosts(lang)
 
   return (
     <>
-      <Header />
-      <main id="main-content" className="mx-auto max-w-5xl px-4 py-16 sm:px-6 md:py-24">
+      <Header locale={lang} paths={localizedPaths("/blog")} />
+      <main
+        id="main-content"
+        className="mx-auto max-w-5xl px-4 py-16 sm:px-6 md:py-24"
+      >
         <header className="max-w-2xl">
           <h1 className="font-section text-3xl tracking-wide text-foreground md:text-4xl">
             {blog.title}
@@ -54,12 +80,15 @@ export default function BlogPage() {
             </p>
           </div>
         ) : (
-          <ul className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2" role="list">
+          <ul
+            className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2"
+            role="list"
+          >
             {posts.map((post) => (
               <li key={post.slug}>
                 <Link
-                  href={`/blog/${post.slug}`}
-                  className="group flex h-full flex-col overflow-hidden rounded-xl bg-card/60 ring-1 ring-border/60 transition-colors hover:ring-accent/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  href={localePath(lang, `/blog/${post.slug}`)}
+                  className="group flex h-full flex-col overflow-hidden rounded-xl bg-card/60 ring-1 ring-border/60 transition-colors hover:ring-accent/60 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
                 >
                   {post.cover ? (
                     <Image
@@ -74,7 +103,9 @@ export default function BlogPage() {
 
                   <div className="flex flex-1 flex-col p-5">
                     <p className="flex flex-wrap items-center gap-x-2 text-xs tracking-wide text-muted-foreground uppercase">
-                      <time dateTime={post.date}>{formatBlogDate(post.date)}</time>
+                      <time dateTime={post.date}>
+                        {formatBlogDate(post.date, lang)}
+                      </time>
                       <span aria-hidden="true">·</span>
                       <span>{post.author}</span>
                     </p>
@@ -91,7 +122,7 @@ export default function BlogPage() {
           </ul>
         )}
       </main>
-      <Footer />
+      <Footer locale={lang} />
     </>
   )
 }
