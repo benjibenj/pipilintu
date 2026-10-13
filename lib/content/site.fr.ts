@@ -66,6 +66,11 @@ export const siteContent = {
     upcomingLabel: "À venir",
     pastLabel: "Passées",
   },
+  /** Link to the full album, under the photo carousel */
+  gallery: {
+    albumCta: "Voir l'album complet (308 photos)",
+    albumLabel: "Album photo complet sur Google Photos (nouvel onglet)",
+  },
   team: {
     title: "L'équipage",
     members: [

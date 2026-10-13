@@ -13,6 +13,9 @@ export const CONTACT = {
 /** Production partner, credited in the footer */
 export const SOLIDREAM_URL = "https://solidream.net/"
 
+/** Full Google Photos album (308 photos), linked under the carousel */
+export const PHOTO_ALBUM_URL = "https://photos.app.goo.gl/qH9wjp93iEjEzzRf8"
+
 /** Builds a wa.me link carrying a pre-filled message */
 export function whatsappHref(message: string) {
   return `${CONTACT.whatsapp}?text=${encodeURIComponent(message)}`

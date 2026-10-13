@@ -1,12 +1,16 @@
 import Image from "next/image"
+import Link from "next/link"
+import { ArrowUpRight, Images } from "lucide-react"
 
 import { Section } from "@/components/layout/section"
 import { GalleryCarousel } from "@/components/sections/gallery-carousel"
+import { Button } from "@/components/ui/button"
+import { PHOTO_ALBUM_URL } from "@/lib/constants"
 import { siteContent } from "@/lib/content/site.fr"
 import { cn } from "@/lib/utils"
 
 export function SynopsisSection() {
-  const { synopsis, itinerary } = siteContent
+  const { synopsis, itinerary, gallery } = siteContent
 
   return (
     <Section id="synopsis" title={synopsis.title}>
@@ -69,6 +73,25 @@ export function SynopsisSection() {
       </div>
 
       <GalleryCarousel className="mt-16 md:mt-20" />
+
+      <div className="mt-8 flex justify-center">
+        <Button
+          variant="outline"
+          size="lg"
+          title={gallery.albumLabel}
+          render={
+            <Link
+              href={PHOTO_ALBUM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            />
+          }
+        >
+          <Images aria-hidden="true" />
+          {gallery.albumCta}
+          <ArrowUpRight aria-hidden="true" />
+        </Button>
+      </div>
     </Section>
   )
 }
