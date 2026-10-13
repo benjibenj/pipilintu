@@ -138,18 +138,6 @@ export const GALLERY_IMAGES = [
   },
 ] as const
 
-/** Projection dates — empty for v1, structure ready for future data */
-export type ProjectionStatus = "upcoming" | "past"
-
-export type Projection = {
-  date: string
-  venue: string
-  city: string
-  status: ProjectionStatus
-}
-
-export const PROJECTIONS: Projection[] = []
-
 export const siteMeta = siteContent.meta
 
 /**

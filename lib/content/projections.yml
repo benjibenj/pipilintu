@@ -1,0 +1,36 @@
+# ─────────────────────────────────────────────────────────────────────────────
+#  SCREENINGS OF THE FILM PIPILINTU
+# ─────────────────────────────────────────────────────────────────────────────
+#
+#  To ADD a screening: copy an existing block (from its "- date" line down to
+#  its last line), paste it at the bottom of the file and change the values.
+#  The order of the blocks doesn't matter: the site sorts them by date.
+#
+#  To EDIT: just change the text after the colon.
+#  To REMOVE: delete the whole block.
+#
+#  "Upcoming" / "Past" is worked out from the date, so there's nothing to move
+#  once a screening has happened.
+#
+#  Fields:
+#    date    (required)  YYYY-MM-DD, e.g. 2026-11-08
+#    time    (optional)  e.g. 14:30 or 14h30
+#    event   (required)  name of the festival, cinema or evening
+#    venue   (required)  e.g. Parc Phoenix, Cinéma Le Rex…
+#    city    (required)  e.g. Nice
+#    link    (optional)  event page or ticketing (https://…)
+#    info    (optional)  one short line: "followed by a Q&A", "free entry"…
+#
+#  Event, venue and info are shown exactly as written, on every language
+#  version of the site.
+#
+#  ⚠ Keep the two spaces before each field name, as below.
+#  Lines starting with # are comments and are ignored by the site.
+# ─────────────────────────────────────────────────────────────────────────────
+
+- date: 2026-11-08
+  time: 14:30
+  event: Festival Explorimages
+  venue: Parc Phoenix
+  city: Nice
+  link: https://www.explorimages.fr/

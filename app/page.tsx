@@ -6,6 +6,12 @@ import { ProjectionDatesSection } from "@/components/sections/projections"
 import { SynopsisSection } from "@/components/sections/synopsis"
 import { TeamSection } from "@/components/sections/team"
 
+/**
+ * Re-render hourly so a screening moves from "À venir" to "Passées" the day
+ * after it happens, without waiting for the next deploy.
+ */
+export const revalidate = 3600
+
 export default function HomePage() {
   return (
     <>

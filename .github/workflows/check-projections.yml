@@ -1,0 +1,29 @@
+# Validates lib/content/projections.yml whenever it changes, so whoever edits
+# it on GitHub gets a ✓ or ✗ on their commit with a message explaining what to
+# fix — instead of the error only reaching the hosting dashboard.
+name: Check screenings
+
+on:
+  push:
+    paths:
+      - lib/content/projections.yml
+      - lib/projections.ts
+      - scripts/check-projections.ts
+  pull_request:
+    paths:
+      - lib/content/projections.yml
+      - lib/projections.ts
+      - scripts/check-projections.ts
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Check lib/content/projections.yml
+        run: npm run check:projections

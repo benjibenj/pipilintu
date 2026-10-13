@@ -65,6 +65,8 @@ export const siteContent = {
       "Les dates de projection seront annoncées ici. Inscrivez-vous à la newsletter pour être informé en premier.",
     upcomingLabel: "À venir",
     pastLabel: "Passées",
+    moreInfo: "Plus d'infos",
+    mapLabel: "Voir le lieu sur la carte",
   },
   /** Link to the full album, under the photo carousel */
   gallery: {
