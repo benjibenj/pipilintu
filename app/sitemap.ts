@@ -32,10 +32,12 @@ function entry(
 export default function sitemap(): MetadataRoute.Sitemap {
   const home = localizedPaths("/")
   const blog = localizedPaths("/blog")
+  const media = localizedPaths("/media")
 
   return LOCALES.flatMap((locale) => [
     entry(locale, home, { changeFrequency: "weekly", priority: 1 }),
     entry(locale, blog, { changeFrequency: "weekly", priority: 0.8 }),
+    entry(locale, media, { changeFrequency: "monthly", priority: 0.7 }),
     ...getBlogPosts(locale).map((post) =>
       entry(locale, getPostTranslations(post.translationKey), {
         lastModified: post.date,

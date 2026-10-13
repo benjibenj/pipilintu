@@ -25,6 +25,7 @@ export const siteContent: SiteContent = {
     synopsis: "Synopsis",
     projections: "Screenings",
     team: "Crew",
+    media: "Press",
     blog: "Blog",
   },
   ui: {
@@ -189,6 +190,15 @@ export const siteContent: SiteContent = {
     emailLabel: "Send us an email",
     instagramLabel: "Follow us on Instagram",
     whatsappLabel: "Contact us on WhatsApp",
+  },
+  /** The /media page: press coverage, data in lib/content/media.ts */
+  media: {
+    title: "Press",
+    description:
+      "Articles, TV reports and videos about the expedition, from the preparations to the arrival at the Atlantic, and about the film.",
+    articles: "Articles",
+    videos: "TV, video and social media",
+    untitledVideo: "Video",
   },
   blog: {
     title: "Expedition journal",

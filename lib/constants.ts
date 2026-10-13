@@ -35,6 +35,7 @@ export const NAV_ITEMS = [
   { key: "synopsis", path: "/#synopsis" },
   { key: "projections", path: "/#projections" },
   { key: "team", path: "/#team" },
+  { key: "media", path: "/media" },
   { key: "blog", path: "/blog" },
 ] as const
 

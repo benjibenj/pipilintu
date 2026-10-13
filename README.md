@@ -10,8 +10,8 @@ Portuguese.
 ## How the site is organised
 
 It is a single home page (hero with trailer, synopsis and photo carousel,
-screenings, crew, latest articles) plus a blog with the crew's expedition
-journal.
+screenings, crew, latest articles), a press page listing media coverage, and
+a blog with the crew's expedition journal.
 
 Almost everything you'd want to change is **text in `lib/content/`** — you
 rarely need to touch the components.
@@ -21,6 +21,7 @@ rarely need to touch the components.
 | All site text, per language  | `lib/content/site.fr.ts`, `.en.ts`, `.es.ts`, `.pt.ts` |
 | Blog articles                | `lib/content/blog/<language>/*.md`                  |
 | Screening dates              | `lib/content/projections.yml`                       |
+| Press coverage (/media page) | `lib/content/media.ts`                              |
 | Photos                       | `public/images/`                                    |
 | Gallery order, links, emails | `lib/constants.ts`                                  |
 | Page sections                | `components/sections/`                              |

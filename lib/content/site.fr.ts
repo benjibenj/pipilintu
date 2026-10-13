@@ -23,6 +23,7 @@ export const siteContent = {
     synopsis: "Synopsis",
     projections: "Projections",
     team: "Équipage",
+    media: "Presse",
     blog: "Blog",
   },
   /** Screen-reader labels and small interface words */
@@ -194,6 +195,15 @@ export const siteContent = {
     emailLabel: "Envoyez-nous un email",
     instagramLabel: "Suivez-nous sur Instagram",
     whatsappLabel: "Contactez-nous sur WhatsApp",
+  },
+  /** The /media page: press coverage, data in lib/content/media.ts */
+  media: {
+    title: "Presse",
+    description:
+      "Articles, reportages télé et vidéos consacrés à l'expédition, des préparatifs à l'arrivée sur l'Atlantique, et au film.",
+    articles: "Articles",
+    videos: "Télé, vidéos et réseaux sociaux",
+    untitledVideo: "Vidéo",
   },
   blog: {
     title: "Journal de l'expédition",

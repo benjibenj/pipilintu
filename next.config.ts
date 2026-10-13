@@ -31,8 +31,9 @@ const OLD_BLOG_SLUG_REDIRECTS: Record<string, string> = {
  * The old site (confirmed live at pipilintu.com on 2026-08-25, still
  * indexed) had standalone pages this single-page French site collapses into
  * homepage sections, or drops entirely. Crew profiles fold into the Team
- * section; the boat/safety/press pages have no replacement content here, so
- * they fall back to the homepage rather than 404ing on indexed URLs.
+ * section; the boat and safety pages have no replacement content here, so
+ * they fall back to the homepage rather than 404ing on indexed URLs. The old
+ * /media press page is served again by app/[lang]/media.
  * The old site's non-French trees lived under /en, /es and /pt-br: /en and
  * /es now exist again, and /pt-br is sent to the new /pt.
  */
@@ -46,7 +47,6 @@ const OLD_PAGE_REDIRECTS: Array<{ source: string; destination: string }> = [
   { source: "/crew/thomas-merzlic-toto", destination: "/#team" },
   { source: "/balsa-fr", destination: "/" },
   { source: "/securite", destination: "/" },
-  { source: "/media", destination: "/" },
   { source: "/pt-br", destination: "/pt" },
   { source: "/pt-br/:path*", destination: "/pt" },
 ]
@@ -68,6 +68,7 @@ const nextConfig: NextConfig = {
         { source: "/", destination: "/fr" },
         { source: "/blog", destination: "/fr/blog" },
         { source: "/blog/:slug", destination: "/fr/blog/:slug" },
+        { source: "/media", destination: "/fr/media" },
       ],
     }
   },

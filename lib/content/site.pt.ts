@@ -25,6 +25,7 @@ export const siteContent: SiteContent = {
     synopsis: "Sinopse",
     projections: "Exibições",
     team: "Tripulação",
+    media: "Imprensa",
     blog: "Blog",
   },
   ui: {
@@ -188,6 +189,15 @@ export const siteContent: SiteContent = {
     emailLabel: "Envie um email para nós",
     instagramLabel: "Siga-nos no Instagram",
     whatsappLabel: "Fale com a gente no WhatsApp",
+  },
+  /** The /media page: press coverage, data in lib/content/media.ts */
+  media: {
+    title: "Imprensa",
+    description:
+      "Matérias, reportagens de TV e vídeos sobre a expedição, dos preparativos à chegada ao Atlântico, e sobre o filme.",
+    articles: "Matérias",
+    videos: "TV, vídeos e redes sociais",
+    untitledVideo: "Vídeo",
   },
   blog: {
     title: "Diário da expedição",
