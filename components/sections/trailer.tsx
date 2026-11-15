@@ -31,10 +31,13 @@ function getEmbedUrl(url: string): string | null {
     // Vimeo
     if (parsed.hostname.includes("vimeo.com")) {
       const videoId = parsed.pathname.split("/").filter(Boolean).pop()
+      const privacyHash = parsed.searchParams.get("h")
       if (videoId) {
-        return `https://player.vimeo.com/video/${videoId}`
+        const query = privacyHash ? `?h=${privacyHash}` : ""
+        return `https://player.vimeo.com/video/${videoId}${query}`
       }
     }
+
   } catch {
     return null
   }

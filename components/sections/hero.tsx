@@ -5,7 +5,7 @@ import { InstagramIcon } from "@/components/icons/instagram"
 import { Trailer } from "@/components/sections/trailer"
 import { Button } from "@/components/ui/button"
 import { getSiteContent } from "@/lib/content"
-import { CONTACT, TALLY_FORM_URL } from "@/lib/constants"
+import { CONTACT, TALLY_FORM_URL, TRAILER_URL } from "@/lib/constants"
 import type { Locale } from "@/lib/i18n"
 
 export function HeroSection({ locale }: { locale: Locale }) {
@@ -35,7 +35,7 @@ export function HeroSection({ locale }: { locale: Locale }) {
           {hero.tagline}
         </p>
 
-        <Trailer locale={locale} className="mx-auto mt-10 w-full max-w-xl" />
+        <Trailer trailerUrl={TRAILER_URL} locale={locale} className="mx-auto mt-10 w-full max-w-xl" />
 
         <p className="mx-auto mt-10 max-w-md text-sm text-muted-foreground">
           {hero.ctaHint}
